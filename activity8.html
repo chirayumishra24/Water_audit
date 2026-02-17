@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trace Your Tap – Water Quest Ch.4</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #7dd3fc 0%, #e6f6ff 40%, white 100%);
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .wave {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 140px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.85" d="M0,192L48,197.3C96,203,192,213,288,213.3C384,213,480,203,576,208C672,213,768,203,864,192C960,181,1056,171,1152,160C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x bottom;
+      animation: wave 18s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes wave {
+      0% { background-position-x: 0; }
+      100% { background-position-x: -1440px; }
+    }
+    .bubble {
+      position: absolute;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 9s infinite ease-in-out;
+      box-shadow: 0 0 14px white;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); opacity: 0.8; }
+      50%     { transform: translateY(-200px) scale(0.7); opacity: 0.3; }
+    }
+    #map-canvas {
+      width: 100%;
+      max-width: 800px;
+      height: 420px;
+      margin: 0 auto 2rem;
+      background: linear-gradient(to bottom, #e0f2fe, #bfdbfe);
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+    .path-line {
+      position: absolute;
+      height: 4px;
+      background: linear-gradient(to right, #60a5fa, #1e40af);
+      opacity: 0;
+      animation: draw-path 1.8s forwards;
+    }
+    @keyframes draw-path {
+      0% { width: 0; opacity: 0; }
+      100% { width: 100%; opacity: 0.9; }
+    }
+    .choice-btn {
+      transition: all 0.3s ease;
+    }
+    .choice-btn:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #60a5fa;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: rise 1.5s forwards;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-180px) scale(0); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <div class="wave"></div>
+
+  <!-- Bubbles -->
+  <div class="bubble w-10 h-10 top-[12%] left-[8%] animate-[float_12s_infinite]"></div>
+  <div class="bubble w-7 h-7 top-[38%] right-[14%] animate-[float_10s_infinite_1.6s]"></div>
+  <div class="bubble w-14 h-14 bottom-[20%] left-[20%] animate-[float_14s_infinite_3s]"></div>
+  <div class="bubble w-9 h-9 top-[65%] right-[16%] animate-[float_11s_infinite_0.9s]"></div>
+
+  <div class="container mx-auto px-5 py-12 max-w-4xl relative z-10">
+
+    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 text-center mb-3 font-['Baloo_2'] drop-shadow-md">
+      Trace Your Tap
+    </h1>
+
+    <p class="text-center text-base text-slate-700 mb-10">
+      Build your own water journey map! Click choices to see how water reaches your home.
+    </p>
+
+    <!-- Map canvas -->
+    <div id="map-canvas" class="relative mb-12">
+      <div id="house" class="absolute bottom-8 right-8 text-8xl">🏠</div>
+      <div id="tap" class="absolute bottom-16 right-32 text-6xl">🚰</div>
+      <div id="story-text" class="absolute top-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full text-lg font-medium text-sky-900 shadow-lg max-w-[90%] text-center"></div>
+    </div>
+
+    <!-- Choices -->
+    <div id="choices" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12"></div>
+
+    <!-- Final message -->
+    <div id="final" class="text-center text-xl font-bold text-emerald-700 hidden mt-10 animate-bounce">
+      Your water journey is complete! Every drop connects us all. 🌍💧
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        question: "Where does most of your water come from?",
+        choices: [
+          { text: "Nearby well / borewell", icon: "⛏️", pathColor: "#60a5fa" },
+          { text: "River or lake", icon: "🏞️", pathColor: "#3b82f6" },
+          { text: "Big dam / reservoir", icon: "🏗️", pathColor: "#1e40af" },
+          { text: "Rainwater harvesting", icon: "🌧️", pathColor: "#0ea5e9" }
+        ]
+      },
+      {
+        question: "How far away is the main water source?",
+        choices: [
+          { text: "Very close (in the village)", icon: "🏘️", distance: "close" },
+          { text: "A few kilometers away", icon: "🛣️", distance: "medium" },
+          { text: "Many kilometers (big dam)", icon: "🛤️", distance: "far" }
+        ]
+      },
+      {
+        question: "Who manages / supplies the water?",
+        choices: [
+          { text: "Gram Panchayat", icon: "🏛️", manager: "panchayat" },
+          { text: "Municipal Corporation", icon: "🏙️", manager: "municipal" },
+          { text: "Jal Jeevan Mission / govt scheme", icon: "🚰", manager: "jjm" },
+          { text: "Society / private tankers", icon: "🚚", manager: "private" }
+        ]
+      },
+      {
+        question: "Have you noticed any water problem in your area?",
+        choices: [
+          { text: "Low pressure / slow flow", icon: "💧", problem: "pressure" },
+          { text: "Dry days or shortages", icon: "🏜️", problem: "shortage" },
+          { text: "Sometimes dirty water", icon: "🚫", problem: "quality" },
+          { text: "No problem — always good!", icon: "👍", problem: "none" }
+        ]
+      }
+    ];
+
+    let currentStep = 0;
+    const map = document.getElementById('map-canvas');
+    const choicesDiv = document.getElementById('choices');
+    const storyText = document.getElementById('story-text');
+    const finalMsg = document.getElementById('final');
+
+    function renderStep() {
+      const step = steps[currentStep];
+      storyText.textContent = step.question;
+
+      choicesDiv.innerHTML = '';
+      step.choices.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn w-full bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl border border-sky-200 text-center transition-all';
+        btn.innerHTML = `
+          <div class="text-6xl mb-3">${choice.icon}</div>
+          <p class="font-medium text-base">${choice.text}</p>
+        `;
+        btn.onclick = () => selectChoice(choice, i);
+        choicesDiv.appendChild(btn);
+      });
+    }
+
+    function selectChoice(choice, index) {
+      // Add path line
+      const line = document.createElement('div');
+      line.className = 'path-line';
+      line.style.top = '50%';
+      line.style.left = `${(index * 25) + 10}%`;
+      line.style.width = '20%';
+      line.style.background = choice.pathColor || '#60a5fa';
+      line.style.animationDelay = '0.3s';
+      map.appendChild(line);
+
+      // Add icon on map
+      const iconEl = document.createElement('div');
+      iconEl.className = 'absolute text-5xl transition-all duration-800';
+      iconEl.style.left = `${(index * 25) + 12}%`;
+      iconEl.style.top = '40%';
+      iconEl.textContent = choice.icon;
+      map.appendChild(iconEl);
+
+      // Next step
+      currentStep++;
+      if (currentStep < steps.length) {
+        renderStep();
+      } else {
+        showFinalStory();
+      }
+    }
+
+    function showFinalStory() {
+      choicesDiv.innerHTML = '';
+      storyText.innerHTML = `
+        <span class="text-2xl font-bold text-emerald-700 block mb-4">Your water journey!</span>
+        <span class="text-lg text-slate-700">From source → pipes → your tap. Every drop connects us all.</span>
+      `;
+      finalMsg.classList.remove('hidden');
+
+      // Final water flow animation
+      for (let i = 0; i < 60; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle absolute';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        map.appendChild(p);
+        setTimeout(() => p.remove(), 1800);
+      }
+    }
+
+    // Start
+    renderStep();
+  </script>
+</body>
+</html>
