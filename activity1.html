@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Water Quest – Footprint Detective Activity</title>
- 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
@@ -78,7 +77,6 @@
   <div class="bubble w-8 h-8 top-[35%] right-[15%] animate-[float_9s_infinite_1.5s]"></div>
   <div class="bubble w-16 h-16 bottom-[20%] left-[25%] animate-[float_14s_infinite_3s]"></div>
   <div class="bubble w-10 h-10 top-[60%] right-[10%] animate-[float_11s_infinite_0.8s]"></div>
-
   <div class="container mx-auto px-4 py-10 md:py-16 max-w-5xl relative z-10">
     <h1 class="text-5xl md:text-6xl font-bold text-sky-900 text-center mb-4 font-['Baloo_2'] drop-shadow-lg">
       Water Footprint Detective 🕵️‍♂️
@@ -87,24 +85,20 @@
       Collect clues → calculate your daily water use → decide how to save water.<br>
       Goal: Stay under <strong>55 L/person/day</strong> (rural target)
     </p>
-
     <!-- FIXED WATER METER – "Your Footprint" removed -->
     <div class="relative h-14 bg-gray-200 rounded-full overflow-hidden mb-12 max-w-2xl mx-auto border-4 border-sky-400 shadow-inner">
       <!-- Progress fill -->
       <div id="meter-fill" class="meter-fill absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-600 w-[30%] z-10"></div>
-
       <!-- Only edge labels – no center text -->
       <div class="absolute inset-0 flex items-center justify-between px-6 text-sm md:text-base font-bold text-slate-700 z-20 pointer-events-none drop-shadow-sm">
         <span>0 L</span>
         <span>150+ L</span>
       </div>
-
       <!-- Current value – big and centered -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-bold text-xl md:text-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] z-30 pointer-events-none">
         <span id="meter-value">30</span> L / day
       </div>
     </div>
-
     <!-- Phase 1: Collect Clues -->
     <div id="phase1" class="phase">
       <h2 class="text-3xl font-bold text-sky-800 mb-6 text-center">Phase 1: Gather Clues</h2>
@@ -140,7 +134,6 @@
         </button>
       </div>
     </div>
-
     <!-- Phase 2: Calculate -->
     <div id="phase2" class="phase hidden">
       <h2 class="text-3xl font-bold text-sky-800 mb-6 text-center">Phase 2: Calculate Your Footprint</h2>
@@ -181,23 +174,22 @@
         </button>
       </div>
     </div>
-
     <!-- Phase 3: Choices & Ending -->
     <div id="phase3" class="phase hidden">
       <h2 class="text-3xl font-bold text-sky-800 mb-6 text-center">Phase 3: Choose Your Saving Strategy</h2>
       <p class="text-center text-xl mb-8">Your footprint is <span id="choice-liters" class="font-bold text-sky-900">0</span> L/day. Pick one big change:</p>
       <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="20">
+        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="20" data-action="shorter">
           <div class="text-7xl mb-4">🚿</div>
           <h3 class="font-bold text-2xl mb-3">Shorter showers (–2 min)</h3>
           <p class="text-lg text-slate-700">Saves ~20 L / person / day</p>
         </button>
-        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="15">
+        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="15" data-action="tapoff">
           <div class="text-7xl mb-4">🚰</div>
           <h3 class="font-bold text-2xl mb-3">Turn off tap while brushing</h3>
           <p class="text-lg text-slate-700">Saves ~10–15 L / day</p>
         </button>
-        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="35">
+        <button class="choice-option bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition border-4 border-dashed border-emerald-400 text-center" data-save="35" data-action="bucket">
           <div class="text-7xl mb-4">🪣</div>
           <h3 class="font-bold text-2xl mb-3">Bucket instead of shower</h3>
           <p class="text-lg text-slate-700">Saves ~30–40 L per bath</p>
@@ -211,10 +203,9 @@
       </div>
     </div>
   </div>
-
   <script>
     // ==============================================
-    // Water Footprint Detective – Full Logic
+    // Water Footprint Detective – Full Logic with Edge Cases
     // ==============================================
     let phase = 1;
     let totalSaved = 0;
@@ -228,7 +219,6 @@
     const playAgain = document.getElementById('play-again');
     const meterFill = document.getElementById('meter-fill');
     const meterValue = document.getElementById('meter-value');
-
     // Drag & Drop – Phase 1
     document.querySelectorAll('[draggable]').forEach(card => {
       card.addEventListener('dragstart', e => {
@@ -237,7 +227,6 @@
       });
       card.addEventListener('dragend', () => card.classList.remove('opacity-60', 'scale-95'));
     });
-
     const board = document.getElementById('investigation-board');
     board.addEventListener('dragover', e => {
       e.preventDefault();
@@ -257,12 +246,10 @@
         dropped.draggable = false;
         board.appendChild(dropped);
         board.querySelector('p')?.classList.add('hidden');
-
         if (board.children.length >= 3) {
           nextToCalc.disabled = false;
           nextToCalc.classList.remove('opacity-50', 'cursor-not-allowed');
         }
-
         for (let i = 0; i < 8; i++) {
           const p = document.createElement('div');
           p.className = 'particle';
@@ -273,47 +260,95 @@
         }
       }
     });
-
     nextToCalc.onclick = () => {
       phase1.classList.add('hidden');
       phase2.classList.remove('hidden');
       phase = 2;
     };
-
     calcBtn.onclick = () => {
-      let sum = 0;
-      sum += (parseInt(document.getElementById('shower-count').value) || 0) * 45;
-      sum += (parseInt(document.getElementById('tap-count').value) || 0) * 45;
-      sum += (parseInt(document.getElementById('bucket-count').value) || 0) * 10;
-      sum += (parseInt(document.getElementById('mug-count').value) || 0) * 0.5;
-
+      const showerCount = Math.max(0, parseFloat(document.getElementById('shower-count').value) || 0);
+      const tapCount = Math.max(0, parseFloat(document.getElementById('tap-count').value) || 0);
+      const bucketCount = Math.max(0, parseFloat(document.getElementById('bucket-count').value) || 0);
+      const mugCount = Math.max(0, parseFloat(document.getElementById('mug-count').value) || 0);
+      let sum = showerCount * 45 + tapCount * 45 + bucketCount * 10 + mugCount * 0.5;
       document.getElementById('total-liters').textContent = sum.toFixed(1);
       document.getElementById('calc-result').classList.remove('hidden');
       nextToChoices.classList.remove('hidden');
-
       const percent = Math.min(sum / 150 * 100, 100);
       meterFill.style.width = percent + '%';
       meterValue.textContent = sum.toFixed(1);
     };
-
     nextToChoices.onclick = () => {
       phase2.classList.add('hidden');
       phase3.classList.remove('hidden');
       phase = 3;
       document.getElementById('choice-liters').textContent = document.getElementById('total-liters').textContent;
     };
-
     document.querySelectorAll('.choice-option').forEach(btn => {
       btn.onclick = () => {
-        const save = parseInt(btn.dataset.save);
-        totalSaved += save;
-        let msg = "";
-        if (save >= 30) msg = "Fantastic choice! You just saved a huge amount — village thanks you! 🌟";
-        else if (save >= 15) msg = "Solid decision! Every liter counts — keep going! 💧";
-        else msg = "Good start! Small changes add up — try combining actions next time!";
-        ending.innerHTML = msg + `<br><br><span class="text-4xl">Total saved this time: ${totalSaved} L</span>`;
+        const action = btn.dataset.action;
+        let save = 0;
+        let specialMsg = "";
+        const currentTotal = parseFloat(document.getElementById('total-liters').textContent);
+        const showerCount = Math.max(0, parseFloat(document.getElementById('shower-count').value) || 0);
+        const tapCount = Math.max(0, parseFloat(document.getElementById('tap-count').value) || 0);
+        if (action === "shorter") {
+          if (showerCount === 0) {
+            specialMsg = "You don't take showers, so this change doesn't apply.";
+            save = 0;
+          } else {
+            save = 18 * showerCount;
+          }
+        } else if (action === "tapoff") {
+          save = 15;
+          if (tapCount === 0) {
+            specialMsg = "You already avoid long-running taps, but perhaps small savings elsewhere.";
+          }
+        } else if (action === "bucket") {
+          if (showerCount === 0) {
+            specialMsg = "You don't take showers, so switching to bucket doesn't change anything.";
+            save = 0;
+          } else {
+            save = 35 * showerCount;
+          }
+        }
+        const effectiveSave = Math.min(save, currentTotal);
+        const newTotal = currentTotal - effectiveSave;
+        let msg = specialMsg;
+        let endingClass = "";
+        if (msg) {
+          // If special message, append status
+          if (newTotal <= 10) {
+            msg += " Your water use is already extremely low!";
+          } else if (newTotal <= 55) {
+            msg += " Your water use is already under target!";
+          } else {
+            msg += " Your water use is still above target.";
+          }
+        } else {
+          if (newTotal <= 10) {
+            msg = "Incredible! Your footprint is now super low – you're a water-saving legend! 🏆";
+            endingClass = "bg-emerald-200 text-emerald-900";
+          } else if (newTotal <= 55) {
+            msg = "Fantastic! You've reached below the target. Sustainable hero! 🌟";
+            endingClass = "bg-sky-200 text-sky-900";
+          } else {
+            msg = "Good progress, but still above target. Keep investigating ways to save more! 💡";
+            endingClass = "bg-amber-200 text-amber-900";
+          }
+        }
+        ending.innerHTML = msg + `<br><br><span class="text-4xl">Saved: ${effectiveSave.toFixed(1)} L<br>New daily use: ${newTotal.toFixed(1)} L</span>`;
+        if (endingClass) ending.classList.add(endingClass);
         ending.classList.remove('hidden');
-
+        // Update meter
+        const percent = Math.min(newTotal / 150 * 100, 100);
+        meterFill.style.width = percent + '%';
+        meterValue.textContent = newTotal.toFixed(1);
+        // Disable other choices
+        document.querySelectorAll('.choice-option').forEach(b => {
+          b.disabled = true;
+          b.classList.add('opacity-50', 'cursor-not-allowed');
+        });
         for (let i = 0; i < 30; i++) {
           const p = document.createElement('div');
           p.className = 'particle';
@@ -325,10 +360,8 @@
         }
       };
     });
-
     playAgain.onclick = () => location.reload();
   </script>
-
   <style>
     .phase { transition: opacity 0.6s; }
     .phase.hidden { opacity: 0; pointer-events: none; position: absolute; width: 100%; }
