@@ -178,21 +178,38 @@
       </div>
     </div>
 
-    <!-- Result -->
-    <div id="result-screen" class="hidden mt-16 text-center">
-      <div class="relative w-80 h-80 mx-auto mb-10">
-        <div class="oracle rounded-full overflow-hidden shadow-2xl relative">
-          <div class="water-level absolute bottom-0 left-0 right-0 bg-gradient-to-t from-cyan-400 to-blue-500 transition-all duration-2000" id="water-fill"></div>
-          <div id="oracle-text" class="absolute inset-0 flex items-center justify-center text-white font-medium drop-shadow-2xl p-8 leading-relaxed text-base md:text-lg"></div>
+    <!-- Result – now side-by-side layout -->
+<div id="result-screen" class="hidden mt-16">
+  <div class="grid md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+    <!-- Left: Original oracle (from questions phase) – we can hide or dim it -->
+    <div class="text-center">
+      <h3 class="text-2xl font-semibold text-sky-800 mb-4">Your journey began here</h3>
+      <div class="relative w-64 sm:w-72 h-64 sm:h-72 mx-auto">
+        <div class="oracle rounded-full overflow-hidden shadow-2xl relative opacity-70">
+          <div class="water-level" style="height: 0%;"></div>
+          <div class="reveal-text font-medium opacity-50">Your choices...</div>
         </div>
       </div>
+    </div>
 
-      <button onclick="location.reload()" class="mt-8 px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold rounded-full shadow-xl transition">
-        Ask the Oracle Again
-      </button>
+    <!-- Right: Final revealed oracle -->
+    <div class="text-center">
+      <h3 class="text-2xl font-semibold text-sky-900 mb-4">The Oracle Speaks</h3>
+      <div class="relative w-80 h-80 mx-auto">
+        <div class="oracle rounded-full overflow-hidden shadow-2xl relative">
+          <div class="water-level bg-gradient-to-t from-cyan-400 to-blue-500 transition-all duration-3000" id="water-fill"></div>
+          <div id="oracle-text" class="absolute inset-0 flex items-center justify-center text-white font-medium drop-shadow-2xl p-6 sm:p-8 leading-relaxed text-base sm:text-lg"></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div class="text-center mt-12">
+    <button onclick="location.reload()" class="px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold rounded-full shadow-xl transition">
+      Ask the Oracle Again
+    </button>
+  </div>
+</div>
   <script>
     let totalPoints = 0;
     let answeredCount = 0;
@@ -262,4 +279,5 @@
     }
   </style>
 </body>
+
 </html>
