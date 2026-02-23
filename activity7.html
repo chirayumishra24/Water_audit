@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kitchen Water Timer – Water Quest Ch.3</title>
-
+  <title>Kitchen Water Footprint Challenge – Water Quest Ch.3</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -25,10 +23,7 @@
       animation: wave 18s linear infinite;
       pointer-events: none;
     }
-    @keyframes wave {
-      0% { background-position-x: 0; }
-      100% { background-position-x: -1440px; }
-    }
+    @keyframes wave { 0% { background-position-x: 0; } 100% { background-position-x: -1440px; } }
     .bubble {
       position: absolute;
       background: rgba(255,255,255,0.7);
@@ -39,183 +34,138 @@
     }
     @keyframes float {
       0%,100% { transform: translateY(0) scale(1); opacity: 0.8; }
-      50%     { transform: translateY(-180px) scale(0.7); opacity: 0.3; }
+      50% { transform: translateY(-180px) scale(0.7); opacity: 0.3; }
     }
-    #tank {
-      width: 220px;
-      height: 320px;
-      margin: 0 auto;
-      background: #f1f5f9;
-      border: 5px solid #0ea5e9;
-      border-radius: 1.5rem 1.5rem 0 0;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-    #fill {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, #60a5fa, #7dd3fc);
-      transition: height 0.8s ease-out;
-    }
-    .particle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: rise 1.6s forwards;
-    }
-    @keyframes rise {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-200px) scale(0); opacity: 0; }
-    }
-    .btn {
-      transition: all 0.25s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    .btn:active {
-      transform: scale(0.98);
+    .slider { accent-color: #0ea5e9; }
+    .badge {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(16,185,129,0.3);
     }
   </style>
 </head>
 <body class="relative">
-
   <div class="wave"></div>
-
-  <!-- Bubbles -->
   <div class="bubble w-10 h-10 top-[12%] left-[8%] animate-[float_12s_infinite]"></div>
   <div class="bubble w-7 h-7 top-[38%] right-[14%] animate-[float_10s_infinite_1.6s]"></div>
   <div class="bubble w-14 h-14 bottom-[20%] left-[20%] animate-[float_14s_infinite_3s]"></div>
-  <div class="bubble w-9 h-9 top-[65%] right-[16%] animate-[float_11s_infinite_0.9s]"></div>
 
   <div class="container mx-auto px-5 py-12 max-w-4xl relative z-10">
-
-    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 text-center mb-3 font-['Baloo_2'] drop-shadow-md">
-      Kitchen Water Timer
+    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 text-center mb-4 font-['Baloo_2'] drop-shadow-md">
+      Kitchen Water Footprint Challenge
     </h1>
-
-    <p class="text-center text-base text-slate-700 mb-6">
-      Pick an activity → click “Start” every time you would fill the container → watch the tank fill!
+    <p class="text-center text-lg text-slate-700 mb-10 max-w-3xl mx-auto">
+      How much water does your kitchen routine use each day?<br>
+      Enter your habits → see your footprint → discover easy swaps to save water!
     </p>
 
-    <!-- Controls -->
-    <div class="flex flex-wrap justify-center gap-4 mb-10">
-      <select id="activity" class="p-3 bg-white border-2 border-sky-300 rounded-xl text-base focus:outline-none focus:border-sky-500">
-        <option value="bottle|0.75">Drinking water (refillable bottle ≈ 750 mL)</option>
-        <option value="mug|0.3">Making tea / brushing teeth (mug ≈ 300 mL)</option>
-        <option value="soda|2">Washing dishes (2 L soda bottle)</option>
-        <option value="bucket|10">Mopping floor / car wash (bucket ≈ 10 L)</option>
-        <option value="bathtub|150">Filling a bathtub (~150 L)</option>
-      </select>
+    <!-- Inputs -->
+    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-10">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label class="block text-lg font-medium text-slate-700 mb-2">How many times do you brush teeth / rinse mouth per day?</label>
+          <input type="range" min="0" max="10" value="2" class="slider w-full" id="brush">
+          <div class="text-center text-xl font-bold mt-1" id="brushVal">2 times</div>
+        </div>
+        <div>
+          <label class="block text-lg font-medium text-slate-700 mb-2">How many dishes do you wash by hand per day?</label>
+          <input type="range" min="0" max="30" value="10" class="slider w-full" id="dishes">
+          <div class="text-center text-xl font-bold mt-1" id="dishesVal">10 dishes</div>
+        </div>
+        <div>
+          <label class="block text-lg font-medium text-slate-700 mb-2">How many times do you boil water for tea/coffee per day?</label>
+          <input type="range" min="0" max="8" value="3" class="slider w-full" id="boil">
+          <div class="text-center text-xl font-bold mt-1" id="boilVal">3 times</div>
+        </div>
+        <div>
+          <label class="block text-lg font-medium text-slate-700 mb-2">How long do you leave the tap running while washing veggies/fruits? (seconds)</label>
+          <input type="range" min="0" max="120" step="10" value="60" class="slider w-full" id="veggies">
+          <div class="text-center text-xl font-bold mt-1" id="veggiesVal">60 seconds</div>
+        </div>
+      </div>
 
-      <button id="startBtn" class="btn px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold rounded-full shadow-lg">
-        Start
-      </button>
-
-      <button id="stopBtn" class="btn px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white text-xl font-bold rounded-full shadow-lg hidden">
-        Stop & See Total
-      </button>
-
-      <button id="resetBtn" class="btn px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white text-lg rounded-full shadow-lg hidden">
-        Reset
-      </button>
-    </div>
-
-    <!-- Tank -->
-    <div id="tank" class="relative mb-12">
-      <div id="fill"></div>
-      <div class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold drop-shadow-lg pointer-events-none">
-        Water Used
+      <div class="mt-10 text-center">
+        <button id="calculate" class="px-10 py-5 bg-emerald-600 hover:bg-emerald-700 text-white text-xl font-bold rounded-full shadow-lg transition">
+          Calculate My Footprint
+        </button>
       </div>
     </div>
 
-    <!-- Result -->
-    <div id="result" class="text-center text-xl font-medium text-slate-800 min-h-[3rem]"></div>
+    <!-- Results -->
+    <div id="results" class="hidden bg-gradient-to-br from-sky-50 to-emerald-50 rounded-2xl shadow-xl p-8 text-center">
+      <h2 class="text-3xl font-bold text-sky-900 mb-6">Your Kitchen Water Footprint</h2>
+      <div class="text-5xl font-extrabold text-emerald-600 mb-4" id="totalLiters">0 L/day</div>
+      <p class="text-xl text-slate-700 mb-8" id="comparison"></p>
+
+      <div class="badge text-2xl mb-8" id="heroLevel">Water Hero Level: Beginner</div>
+
+      <h3 class="text-2xl font-semibold text-sky-800 mb-6">Smart Swaps to Save More</h3>
+      <p class="text-lg text-slate-600 mb-4">Try these changes and see the difference!</p>
+      <div id="savings" class="text-left max-w-2xl mx-auto space-y-4 text-lg"></div>
+
+      <button onclick="location.reload()" class="mt-10 px-8 py-4 bg-sky-600 hover:bg-sky-700 text-white text-lg font-bold rounded-full shadow-lg transition">
+        Try Different Habits
+      </button>
+    </div>
   </div>
 
   <script>
-    const activitySelect = document.getElementById('activity');
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const tankFill = document.getElementById('fill');
-    const result = document.getElementById('result');
+    // Update slider values live
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      const valSpan = document.getElementById(slider.id + 'Val');
+      slider.addEventListener('input', () => {
+        valSpan.textContent = slider.value + (slider.id === 'veggies' ? ' seconds' : ' times');
+      });
+    });
 
-    let interval = null;
-    let totalVolume = 0;
-    let count = 0;
+    document.getElementById('calculate').addEventListener('click', () => {
+      // Approximate liters per action (realistic estimates)
+      const brush = parseInt(document.getElementById('brush').value) * 4;     // wasteful = 4L per brush
+      const dishes = parseInt(document.getElementById('dishes').value) * 1.2; // ~1.2L per dish under running tap
+      const boil = parseInt(document.getElementById('boil').value) * 1.5;     // full kettle waste
+      const veggies = (parseInt(document.getElementById('veggies').value) / 10) * 2; // 2L per 10 sec running
 
-    function startCounting() {
-      const [container, mlStr] = activitySelect.value.split('|');
-      const mlPerFill = parseFloat(mlStr) * 1000; // convert L to mL if needed
+      const total = brush + dishes + boil + veggies;
 
-      totalVolume = 0;
-      count = 0;
-      tankFill.style.height = '0%';
-      result.textContent = '';
+      document.getElementById('totalLiters').textContent = `${Math.round(total)} L/day`;
 
-      startBtn.classList.add('hidden');
-      stopBtn.classList.remove('hidden');
-      resetBtn.classList.add('hidden');
+      let compare = '';
+      if (total < 15) compare = "Wow! You're already very water-wise in the kitchen — great habits!";
+      else if (total < 35) compare = "Average kitchen use — there's good room to save more with small changes.";
+      else compare = "High use — common in many homes, but easy fixes can cut this in half!";
 
-      interval = setInterval(() => {
-        count++;
-        totalVolume += mlPerFill;
+      document.getElementById('comparison').textContent = compare;
 
-        const percent = Math.min((totalVolume / 50000) * 100, 100); // cap at 50 L for visual
-        tankFill.style.height = percent + '%';
+      // Hero level
+      let level = "Water Watcher";
+      if (total < 15) level = "Kitchen Water Hero!";
+      else if (total < 25) level = "Smart Saver";
+      document.getElementById('heroLevel').textContent = `Water Hero Level: ${level}`;
 
-        // Bubbles
-        for (let i = 0; i < 3; i++) {
-          const b = document.createElement('div');
-          b.className = 'bubble';
-          b.style.width = b.style.height = (5 + Math.random()*7) + 'px';
-          b.style.left = Math.random() * 100 + '%';
-          b.style.bottom = '0';
-          document.getElementById('tank').appendChild(b);
-          setTimeout(() => b.remove(), 3000);
+      // Savings ideas
+      const savingsDiv = document.getElementById('savings');
+      savingsDiv.innerHTML = '';
+      const tips = [
+        { action: "Turn off tap while brushing → use a cup", save: Math.round(brush * 0.75) },
+        { action: "Wash dishes in a filled sink instead of running tap", save: Math.round(dishes * 0.6) },
+        { action: "Boil only what you need in kettle", save: Math.round(boil * 0.7) },
+        { action: "Wash veggies in a bowl instead of running water", save: Math.round(veggies * 0.8) }
+      ];
+
+      tips.forEach(t => {
+        if (t.save > 0) {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>${t.action}</strong> → Save ≈ <span class="text-emerald-600 font-bold">${t.save} L/day</span>`;
+          savingsDiv.appendChild(p);
         }
-      }, 800); // simulate one fill every 0.8 sec
-    }
+      });
 
-    function stopCounting() {
-      clearInterval(interval);
-      startBtn.classList.remove('hidden');
-      stopBtn.classList.add('hidden');
-      resetBtn.classList.remove('hidden');
-
-      const liters = (totalVolume / 1000).toFixed(1);
-      let comparison = '';
-
-      if (liters < 5) comparison = `${liters} L — that's just a few bottles!`;
-      else if (liters < 20) comparison = `${liters} L — like filling ${Math.round(liters / 2)} big soda bottles!`;
-      else if (liters < 100) comparison = `${liters} L — about ${Math.round(liters / 10)} cleaning buckets!`;
-      else comparison = `${liters} L — wow, that's a lot! Almost a small bathtub!`;
-
-      result.innerHTML = `
-        <span class="text-emerald-600 text-2xl font-bold block">Total: ${liters} liters</span>
-        <span class="text-base text-slate-700">${comparison}</span>
-      `;
-    }
-
-    function reset() {
-      clearInterval(interval);
-      totalVolume = 0;
-      count = 0;
-      tankFill.style.height = '0%';
-      result.textContent = '';
-      startBtn.classList.remove('hidden');
-      stopBtn.classList.add('hidden');
-      resetBtn.classList.add('hidden');
-    }
-
-    startBtn.onclick = startCounting;
-    stopBtn.onclick = stopCounting;
-    resetBtn.onclick = reset;
+      document.getElementById('results').classList.remove('hidden');
+      window.scrollTo({ top: document.getElementById('results').offsetTop - 100, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>
