@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Volume Capacity Sort – Fixed</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -40,7 +38,7 @@
     }
     @keyframes float {
       0%,100% { transform: translateY(0) scale(1); opacity: 0.8; }
-      50%     { transform: translateY(-220px) scale(0.6); opacity: 0.3; }
+      50% { transform: translateY(-220px) scale(0.6); opacity: 0.3; }
     }
     .item {
       transition: all 0.25s ease;
@@ -83,15 +81,13 @@
       animation: rise 1.2s forwards;
     }
     @keyframes rise {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-140px) scale(0); opacity: 0; }
     }
   </style>
 </head>
 <body class="relative">
-
   <div class="wave"></div>
-
   <!-- Bubbles -->
   <div class="bubble w-10 h-10 top-[12%] left-[8%] animate-[float_12s_infinite]"></div>
   <div class="bubble w-7 h-7 top-[38%] right-[14%] animate-[float_10s_infinite_1.6s]"></div>
@@ -99,11 +95,9 @@
   <div class="bubble w-9 h-9 top-[65%] right-[16%] animate-[float_11s_infinite_0.9s]"></div>
 
   <div class="container mx-auto px-5 py-12 max-w-6xl relative z-10">
-
     <h1 class="text-4xl md:text-5xl font-bold text-sky-900 text-center mb-3 font-['Baloo_2'] drop-shadow-md">
       Volume Capacity Sort
     </h1>
-
     <p class="text-center text-sm md:text-base text-slate-700 mb-10">
       Drag each item to the correct capacity group.<br>
       Tiny • Everyday • Very Large
@@ -114,43 +108,59 @@
       <div class="bg-white/60 backdrop-blur-sm p-6 rounded-3xl border border-sky-300">
         <h3 class="text-xl font-semibold text-sky-800 mb-5 text-center">Items</h3>
         <div id="items-list" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- 1 mL eye drop -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="tiny" data-id="1">
-            <div class="text-5xl mb-2">💧</div>
+            <img src="https://images.unsplash.com/photo-1580281780460-82d277b0e3f8?auto=format&fit=crop&q=80&w=800" 
+                 alt="1 mL eye dropper bottle" class="mx-auto h-20 w-auto object-contain mb-2">
             <p>1 mL eye drop</p>
           </div>
 
+          <!-- 5 mL teaspoon medicine -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="tiny" data-id="2">
-            <div class="text-5xl mb-2">💉</div>
+            <img src="https://images.unsplash.com/photo-1587854691336-2d7e3d8d4a8a?auto=format&fit=crop&q=80&w=800" 
+                 alt="5 mL teaspoon medicine" class="mx-auto h-20 w-auto object-contain mb-2">
             <p>5 mL teaspoon medicine</p>
           </div>
 
+          <!-- 500 mL water bottle -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="everyday" data-id="3">
-            <div class="text-5xl mb-2">🥤</div>
+            <img src="https://images.unsplash.com/photo-1616118132534-381148898bb4?auto=format&fit=crop&q=80&w=800" 
+                 alt="500 mL water bottle" class="mx-auto h-20 w-auto object-contain mb-2">
             <p>500 mL water bottle</p>
           </div>
 
+          <!-- 20 L cleaning bucket -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="everyday" data-id="4">
-            <div class="text-5xl mb-2">🪣</div>
+            <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=800" 
+                 alt="20 L cleaning bucket" class="mx-auto h-20 w-auto object-contain mb-2">
             <p>20 L cleaning bucket</p>
           </div>
 
+          <!-- 150 L family bathtub -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="everyday" data-id="5">
-            <div class="text-5xl mb-2">🛁</div>
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800" 
+                 alt="150 L family bathtub" class="mx-auto h-20 w-auto object-contain mb-2 rounded">
             <p>150 L family bathtub</p>
           </div>
 
+          <!-- 20 m³ small swimming pool -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="large" data-id="6">
-            <div class="text-5xl mb-2">🏊</div>
+            <img src="https://images.unsplash.com/photo-1570549717489-3d5e0c3d8a3c?auto=format&fit=crop&q=80&w=800" 
+                 alt="20 m³ small swimming pool" class="mx-auto h-20 w-auto object-cover mb-2 rounded">
             <p>20 m³ small swimming pool</p>
           </div>
 
+          <!-- 100 m³ small pond -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="large" data-id="7">
-            <div class="text-5xl mb-2">🏞️</div>
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800" 
+                 alt="100 m³ small pond" class="mx-auto h-20 w-auto object-cover mb-2 rounded">
             <p>100 m³ small pond</p>
           </div>
 
+          <!-- 10,000 m³ lake section -->
           <div class="item bg-white p-4 rounded-xl shadow-md border-2 border-dashed border-sky-300 text-center" draggable="true" data-group="large" data-id="8">
-            <div class="text-5xl mb-2">🌊</div>
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=800" 
+                 alt="10,000 m³ lake section" class="mx-auto h-20 w-auto object-cover mb-2 rounded">
             <p>10,000 m³ lake section</p>
           </div>
         </div>
@@ -163,13 +173,11 @@
           <p class="text-xs text-slate-600 mb-4">< 1 L</p>
           <div class="flex flex-wrap gap-4 justify-center min-h-[120px]"></div>
         </div>
-
         <div id="everyday-bucket" class="bucket dropzone bg-emerald-50/70 p-6 rounded-3xl border-4 border-emerald-400 text-center">
           <h3 class="text-lg font-semibold text-emerald-800 mb-3">Everyday volumes</h3>
           <p class="text-xs text-slate-600 mb-4">1 L – 200 L</p>
           <div class="flex flex-wrap gap-4 justify-center min-h-[120px]"></div>
         </div>
-
         <div id="large-bucket" class="bucket dropzone bg-indigo-50/70 p-6 rounded-3xl border-4 border-indigo-400 text-center">
           <h3 class="text-lg font-semibold text-indigo-800 mb-3">Very large volumes</h3>
           <p class="text-xs text-slate-600 mb-4">> 200 L / m³ scale</p>
@@ -177,152 +185,131 @@
         </div>
       </div>
     </div>
-<!-- Controls -->
-<div class="flex flex-wrap justify-center gap-6 mt-10">
-  <button id="submitBtn"
-    class="px-8 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg transition-all active:scale-95">
-    ✅ Submit
-  </button>
 
-  <button id="resetBtn"
-    class="px-8 py-3 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-semibold shadow-lg transition-all active:scale-95">
-    🔄 Reset
-  </button>
-</div>
+    <!-- Controls -->
+    <div class="flex flex-wrap justify-center gap-6 mt-10">
+      <button id="submitBtn" class="px-8 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg transition-all active:scale-95">
+        ✅ Submit
+      </button>
+      <button id="resetBtn" class="px-8 py-3 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-semibold shadow-lg transition-all active:scale-95">
+        🔄 Reset
+      </button>
+    </div>
 
     <!-- Result -->
     <div id="result" class="text-center text-xl font-bold mt-10 min-h-[3rem]"></div>
   </div>
 
- <script>
-  let correctCount = 0;
-  const totalItems = 8;
-  const dropped = new Set();
+  <script>
+    let correctCount = 0;
+    const totalItems = 8;
+    const dropped = new Set();
+    const buckets = {
+      tiny: document.getElementById('tiny-bucket'),
+      everyday: document.getElementById('everyday-bucket'),
+      large: document.getElementById('large-bucket')
+    };
+    const result = document.getElementById('result');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
 
-  const buckets = {
-    tiny: document.getElementById('tiny-bucket'),
-    everyday: document.getElementById('everyday-bucket'),
-    large: document.getElementById('large-bucket')
-  };
-
-  const result = document.getElementById('result');
-  const submitBtn = document.getElementById('submitBtn');
-  const resetBtn = document.getElementById('resetBtn');
-
-  // Enable drop on buckets
-  Object.values(buckets).forEach(bucket => {
-    bucket.addEventListener('dragover', e => {
-      e.preventDefault();
-      bucket.classList.add('over');
-    });
-
-    bucket.addEventListener('dragleave', () => bucket.classList.remove('over'));
-
-    bucket.addEventListener('drop', e => {
-      e.preventDefault();
-      bucket.classList.remove('over');
-
-      const itemId = e.dataTransfer.getData('text/plain');
-      if (!itemId || dropped.has(itemId)) return;
-
-      const original = document.querySelector(`[data-id="${itemId}"]`);
-      if (!original) return;
-
-      const itemGroup = original.dataset.group;
-      const bucketGroup = bucket.id.replace('-bucket', '');
-
-      // Clone item into bucket
-      const clone = original.cloneNode(true);
-      clone.draggable = false;
-      clone.classList.remove('border-dashed', 'cursor-grab');
-      clone.classList.add(
-        'border-solid',
-        'border-emerald-500',
-        'bg-emerald-50',
-        'cursor-default',
-        'text-sm',
-        'shadow-md'
-      );
-
-      bucket.querySelector('div').appendChild(clone);
-
-      // Hide original
-      original.classList.add('dropped');
-
-      dropped.add(itemId);
-
-      // Correct check
-      if (itemGroup === bucketGroup) {
-        correctCount++;
-      }
-
-      // Visual particles
-      for (let i = 0; i < 10; i++) {
-        const p = document.createElement('div');
-        p.className = 'success-particle absolute';
-        p.style.left = `${e.offsetX + Math.random()*60 - 30}px`;
-        p.style.top = `${e.offsetY}px`;
-        bucket.appendChild(p);
-        setTimeout(() => p.remove(), 1200);
-      }
-    });
-  });
-
-  // Enable drag
-  document.querySelectorAll('.item').forEach(item => {
-    item.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('text/plain', item.dataset.id);
-      e.dataTransfer.effectAllowed = "move";
-    });
-  });
-
-  // SUBMIT BUTTON
-  submitBtn.addEventListener('click', () => {
-    if (dropped.size < totalItems) {
-      result.innerHTML = `<span class="text-amber-600">⚠️ Please sort all items before submitting.</span>`;
-      return;
-    }
-
-    if (correctCount === totalItems) {
-      result.innerHTML = '<span class="text-emerald-600">🎉 Perfect! All items sorted correctly!</span>';
-      result.classList.add('animate-bounce');
-
-      // Celebration bubbles
-      for (let i = 0; i < 40; i++) {
-        const b = document.createElement('div');
-        b.className = 'bubble';
-        b.style.width = b.style.height = (6 + Math.random()*10) + 'px';
-        b.style.left = Math.random() * 100 + '%';
-        b.style.top = Math.random() * 100 + '%';
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 5000);
-      }
-
-    } else {
-      result.innerHTML = `<span class="text-rose-600">❌ ${correctCount}/${totalItems} correct. Try again!</span>`;
-    }
-  });
-
-  // RESET BUTTON
-  resetBtn.addEventListener('click', () => {
-    // Clear buckets
+    // Enable drop on buckets
     Object.values(buckets).forEach(bucket => {
-      const zone = bucket.querySelector('div');
-      zone.innerHTML = '';
+      bucket.addEventListener('dragover', e => {
+        e.preventDefault();
+        bucket.classList.add('over');
+      });
+      bucket.addEventListener('dragleave', () => bucket.classList.remove('over'));
+      bucket.addEventListener('drop', e => {
+        e.preventDefault();
+        bucket.classList.remove('over');
+        const itemId = e.dataTransfer.getData('text/plain');
+        if (!itemId || dropped.has(itemId)) return;
+        const original = document.querySelector(`[data-id="${itemId}"]`);
+        if (!original) return;
+        const itemGroup = original.dataset.group;
+        const bucketGroup = bucket.id.replace('-bucket', '');
+        // Clone item into bucket
+        const clone = original.cloneNode(true);
+        clone.draggable = false;
+        clone.classList.remove('border-dashed', 'cursor-grab');
+        clone.classList.add(
+          'border-solid',
+          'border-emerald-500',
+          'bg-emerald-50',
+          'cursor-default',
+          'text-sm',
+          'shadow-md'
+        );
+        bucket.querySelector('div').appendChild(clone);
+        // Hide original
+        original.classList.add('dropped');
+        dropped.add(itemId);
+        // Correct check
+        if (itemGroup === bucketGroup) {
+          correctCount++;
+        }
+        // Visual particles
+        for (let i = 0; i < 10; i++) {
+          const p = document.createElement('div');
+          p.className = 'success-particle absolute';
+          p.style.left = `${e.offsetX + Math.random()*60 - 30}px`;
+          p.style.top = `${e.offsetY}px`;
+          bucket.appendChild(p);
+          setTimeout(() => p.remove(), 1200);
+        }
+      });
     });
 
-    // Reset items
+    // Enable drag
     document.querySelectorAll('.item').forEach(item => {
-      item.classList.remove('dropped');
+      item.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', item.dataset.id);
+        e.dataTransfer.effectAllowed = "move";
+      });
     });
 
-    // Reset state
-    dropped.clear();
-    correctCount = 0;
-    result.innerHTML = '';
-    result.classList.remove('animate-bounce');
-  });
-</script>
+    // SUBMIT BUTTON
+    submitBtn.addEventListener('click', () => {
+      if (dropped.size < totalItems) {
+        result.innerHTML = `<span class="text-amber-600">⚠️ Please sort all items before submitting.</span>`;
+        return;
+      }
+      if (correctCount === totalItems) {
+        result.innerHTML = '<span class="text-emerald-600">🎉 Perfect! All items sorted correctly!</span>';
+        result.classList.add('animate-bounce');
+        // Celebration bubbles
+        for (let i = 0; i < 40; i++) {
+          const b = document.createElement('div');
+          b.className = 'bubble';
+          b.style.width = b.style.height = (6 + Math.random()*10) + 'px';
+          b.style.left = Math.random() * 100 + '%';
+          b.style.top = Math.random() * 100 + '%';
+          document.body.appendChild(b);
+          setTimeout(() => b.remove(), 5000);
+        }
+      } else {
+        result.innerHTML = `<span class="text-rose-600">❌ ${correctCount}/${totalItems} correct. Try again!</span>`;
+      }
+    });
 
+    // RESET BUTTON
+    resetBtn.addEventListener('click', () => {
+      // Clear buckets
+      Object.values(buckets).forEach(bucket => {
+        const zone = bucket.querySelector('div');
+        zone.innerHTML = '';
+      });
+      // Reset items
+      document.querySelectorAll('.item').forEach(item => {
+        item.classList.remove('dropped');
+      });
+      // Reset state
+      dropped.clear();
+      correctCount = 0;
+      result.innerHTML = '';
+      result.classList.remove('animate-bounce');
+    });
+  </script>
 </body>
 </html>
